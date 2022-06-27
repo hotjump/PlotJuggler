@@ -4,7 +4,7 @@ on: [push, pull_request]
 
 jobs:
 
-  ubuntu-build-test:
+  ubuntu-build:
     runs-on: ${{ matrix.ubuntu-distro }}
     strategy:
       fail-fast: false
@@ -33,3 +33,30 @@ jobs:
         run: |
             cmake -B build\plotjuggler PlotJuggler;
             cmake --build build\plotjuggler --target install
+
+windows-build:
+    runs-on: ${{ matrix.windows-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        windows-version:
+          - 'windows-2019'
+          - 'windows-latest'
+    env:
+      CXXFLAGS: /MP
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2.13.0
+        with:
+          version: '5.15.2'
+          arch: 'win64_msvc2019_64'
+          dir: '${{ github.workspace }}/qt_installation/'
+
+      - name: Install Plotjuggler
+        shell: pwsh
+        run: >
+          cmake -Ax64 -T host=x64 -B build\plotjuggler PlotJuggler;
+          cmake --build build\plotjuggler --target install
