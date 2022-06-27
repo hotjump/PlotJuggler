@@ -34,7 +34,7 @@ jobs:
             cmake -B build -DCMAKE_INSTALL_PREFIX=install PlotJuggler;
             cmake --build build --target install
 
-windows-build:
+  windows-build:
     runs-on: ${{ matrix.windows-version }}
     strategy:
       fail-fast: false
