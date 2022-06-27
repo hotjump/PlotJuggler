@@ -27,7 +27,7 @@ jobs:
                 libqt5opengl5-dev \
                 libqt5x11extras5-dev \
                 libprotoc-dev \
-                libzmqpp-dev
+                libzmq-dev
 
       - name: Build workspace
         run: |
