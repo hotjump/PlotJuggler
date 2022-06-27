@@ -31,8 +31,8 @@ jobs:
 
       - name: Build workspace
         run: |
-            cmake -B build\plotjuggler PlotJuggler;
-            cmake --build build\plotjuggler --target install
+            cmake -B build -DCMAKE_INSTALL_PREFIX=install PlotJuggler;
+            cmake --build build --target install
 
 windows-build:
     runs-on: ${{ matrix.windows-version }}
@@ -58,5 +58,5 @@ windows-build:
       - name: Install Plotjuggler
         shell: pwsh
         run: >
-          cmake -Ax64 -T host=x64 -B build\plotjuggler PlotJuggler;
-          cmake --build build\plotjuggler --target install
+          cmake -Ax64 -T host=x64 -B build -DCMAKE_INSTALL_PREFIX=install PlotJuggler;
+          cmake --build build --target install
