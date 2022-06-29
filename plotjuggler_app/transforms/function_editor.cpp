@@ -797,9 +797,9 @@ void FunctionEditorWidget::onUpdatePreview()
     lua_function = std::make_unique<LuaCustomFunction>(snippet);
     ui->buttonSaveCurrent->setEnabled(true);
   }
-  catch (...)
+  catch (std::runtime_error& err)
   {
-    errors += "- The Lua function is not valid.\n";
+    errors += QString("- Error in Lua script: %1").arg(err.what());
     ui->buttonSaveCurrent->setEnabled(false);
   }
 
@@ -819,9 +819,9 @@ void FunctionEditorWidget::onUpdatePreview()
       _preview_widget->addCurve(name, Qt::blue);
       _preview_widget->zoomOut(false);
     }
-    catch (...)
+    catch (std::runtime_error& err)
     {
-      errors += "- The Lua function can not compute the result.\n";
+      errors += QString("- Error in Lua script: %1").arg(err.what());
     }
   }
 
@@ -850,9 +850,9 @@ void FunctionEditorWidget::onUpdatePreviewBatch()
   {
     auto lua_function = std::make_unique<LuaCustomFunction>(snippet);
   }
-  catch (...)
+  catch (std::runtime_error& err)
   {
-    errors += "- The Lua function is not valid.\n";
+    errors += QString("- Error in Lua script: %1").arg(err.what());
   }
 
   setSemaphore( ui->labelSemaphoreBatch, errors );
